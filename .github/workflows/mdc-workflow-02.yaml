@@ -1,0 +1,48 @@
+name: MDC Workflow 02
+
+on:
+  push:
+    branchs:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do Código
+        uses: actions/checkout@v2
+  
+  dev:
+    needs: build # O estágio de desenvolvimento depende do estágio de build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Fase de Desenvolvimento
+        run: echo "Executando Deploy de DEV"
+  
+  qa:
+    needs: build # O estágio de qualidade depende do estágio de build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Fase de Qualidade
+        run: echo "Executando Deploy de QA"
+  
+  homologacao:
+    needs:
+      - dev # O estágio de homologação depende dos estágios de dev e qa
+      - qa
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Fase de Homologação
+        run: echo "Executando Deploy de HML"
+  
+  producao:
+    needs: homologacao # O estágio de produção depende do estágio de homologação
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Fase de Produção
+        run: echo "Executando deploy de PRD"
