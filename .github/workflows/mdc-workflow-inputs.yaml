@@ -1,0 +1,27 @@
+name: MDC Workflow Inputs
+
+on:
+  workflow_dispatch:
+    inputs:
+      sel_runner:
+        description: "Choose the runner for the Job"
+        required: true
+        type: choice
+        default: "ubuntu-latest"
+        options:
+          - "ubuntu-latest"
+          - "macos-latest"
+
+jobs:
+  deploy:
+    runs-on: ${{ inputs.sel_runner }}
+
+    steps:
+      - name: Checkout do Código
+        uses: actions/checkout@v2
+
+      - name: Mostrar Runner selecionado
+        run: echo "${{ inputs.sel_runner}}"
+
+      - name: Executando no Runner
+        run: echo "Executando um Deploy usando Runner selecionado no Input"
