@@ -1,0 +1,24 @@
+name: MDC Workflow Azure Login # Run Azure Login with OpenID Connect
+
+on: [push]
+
+permissions:
+      id-token: write
+      contents: read
+
+jobs:
+  execute-remote-az-cli:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Login via Az module
+        uses: azure/login@v1
+        with:
+          creds: ${{secrets.AZURE_CREDENTIALS}}
+          enable-AzPSSession: true
+      
+      - name: Run Azure CLI comands
+        run: |
+            az account show
+            az group list
+            pwd
