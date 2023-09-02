@@ -1,9 +1,7 @@
-name: MDC Workflow 01
+name: MDC Workflow Manual
 
 on:
-  push:
-    branchs:
-      - main
+  workflow_dispatch
 
 jobs:
   build:
